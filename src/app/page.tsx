@@ -1,5 +1,5 @@
-import Login from './(auth)/login';
 import Navbar from './Navbar';
+import Login from './(auth)/login';
 import styles from './page.module.css'
 
 function Home() {
@@ -54,7 +54,6 @@ function Home() {
                 interactions during your job hunt process, getting you hired faster.
               </p>
               <div className='mt-10 flex items-center justify-center gap-x-6'>
-                <Login />
                 <a
                   href='#'
                   className='text-base font-semibold leading-7 text-gray-900'

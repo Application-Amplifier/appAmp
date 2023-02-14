@@ -68,14 +68,10 @@ const Navbar = (props: Props) => {
             ))}
           </div>
           <div className='hidden lg:flex lg:flex-1 items-center lg:justify-end'>
-            <a
-              href='#'
-              className='text-sm hover:scale-105 font-semibold leading-6 text-gray-900'
-            >
-              Log in <span aria-hidden='true'>&rarr;</span>
-            </a>
             <a className='rounded-md text-sm cursor-pointer ml-4 bg-indigo-600 px-3.5 py-1.5 hover:shadow-md font-semibold leading-7 text-white shadow-sm hover:scale-105 hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'>
-              Create a Project
+              <button onClick={() => signIn()}>
+                Login
+              </button>
             </a>
           </div>
         </nav>
@@ -104,30 +100,29 @@ const Navbar = (props: Props) => {
             </div>
             <div className='mt-6 flow-root'>
               <div className='-my-6 divide-y divide-gray-500/10'>
-                <div className='space-y-2 py-6'>
-                  {navigation.map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      className='-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-400/10'
-                    >
-                      {item.name}
-                    </a>
-                  ))}
-                </div>
-                <div className='py-6'>
+                <div className='space-y-2 py-6'></div>
+                {navigation.map((item) => (
                   <a
-                    href='#'
-                    className='-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-6 text-gray-900 hover:bg-gray-400/10'
+                    key={item.name}
+                    href={item.href}
+                    className='-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-400/10'
                   >
-                    Log in
+                    {item.name}
                   </a>
-                </div>
+                ))}
+              </div>
+              <div className='py-6'>
+                <a
+                  href='#'
+                  className='-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-6 text-gray-900 hover:bg-gray-400/10'
+                >
+                  Log in
+                </a>
               </div>
             </div>
           </Dialog.Panel>
         </Dialog>
-      </div>
+      </div >
     );
   }
 };
