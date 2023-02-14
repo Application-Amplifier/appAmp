@@ -1,9 +1,10 @@
 'use client';
 import React, { useState, useEffect } from 'react'
+import { signOut } from 'next-auth/react';
 import Navbar from './Navbar';
 import Tile from './Tile';
 import axios, { AxiosResponse } from 'axios'
-import { Application } from '../../types/Types'
+import Application from '../../interfaces/application';
 
 type Props = {}
 
@@ -44,6 +45,7 @@ const Dashboard = (props: Props) => {
 
   return (
     <>
+      <button onClick={() => signOut()} type="button" className="btn btn-primary">Sign Out of Google</button>
       <Navbar />
       <div className='flex w-full h-full'>
         <div className={column}>

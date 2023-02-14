@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 // https://www.npmjs.com/package/react-modal
 import Modal from 'react-modal';
 import VscTools from 'react-icons/vsc';
-import { Application } from '../../types/Types'
+import Application from '../../interfaces/application'
 
 type Props = {
   application: Application,
@@ -46,7 +46,7 @@ const Tile = (props: Props) => {
       >
         <span className="companyName">{application.companyName}</span>
         <span className="positionTitle">{application.positionTitle}</span>
-        <span className="dateApplied">{application.date}</span>
+        <span className="dateApplied">{application.date.toString()}</span>
       </div>
       <Modal
         isOpen={isOpen}
