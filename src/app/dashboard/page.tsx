@@ -3,12 +3,9 @@ import React, { useState, useEffect } from 'react'
 import Navbar from './Navbar';
 import Tile from './Tile';
 import axios, { AxiosResponse } from 'axios'
+import { Application } from '../../types/Types'
 
 type Props = {}
-
-type Application = {
-  status: string,
-}
 
 const Dashboard = (props: Props) => {
   const [contactTiles, setContactTiles] = useState<Application[]>([]);
@@ -43,24 +40,36 @@ const Dashboard = (props: Props) => {
   }, []);
 
   // CSS variables
-  const column = 'flex flex-col w-full h-full'
+  const column = 'flex flex-col flex-grow mx-auto gap-y-4 border p-3'
 
   return (
     <>
       <Navbar />
-      <div>
-        <div className={column}>{contactTiles.map((item: Application, idx: number) => (
-          <Tile key={idx} application={item} />
-        ))}</div>
-        <div className={column}>{appliedTiles.map((item: Application, idx: number) => (
-          <Tile key={idx} application={item} />
-        ))}</div>
-        <div className={column}>{interviewedTiles.map((item: Application, idx: number) => (
-          <Tile key={idx} application={item} />
-        ))}</div>
-        <div className={column}>{offeredTiles.map((item: Application, idx: number) => (
-          <Tile key={idx} application={item} />
-        ))}</div>
+      <div className='flex w-full h-full'>
+        <div className={column}>
+          <h1>Contacted</h1>
+          {contactTiles.map((item: Application, idx: number) => (
+            <Tile key={idx} application={item} />
+          ))}
+        </div>
+        <div className={column}>
+          <h1>Applied</h1>
+          {appliedTiles.map((item: Application, idx: number) => (
+            <Tile key={idx} application={item} />
+          ))}
+        </div>
+        <div className={column}>
+          <h1>Interviewed</h1>
+          {interviewedTiles.map((item: Application, idx: number) => (
+            <Tile key={idx} application={item} />
+          ))}
+        </div>
+        <div className={column}>
+          <h1>Offered</h1>
+          {offeredTiles.map((item: Application, idx: number) => (
+            <Tile key={idx} application={item} />
+          ))}
+        </div>
       </div>
 
     </>

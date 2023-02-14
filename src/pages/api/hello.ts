@@ -4,8 +4,9 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 type Data = { status: string }[]
 
 const apps = [
-  { status: 'contact' },
-  { status: 'applied' },
+  { status: 'contact', companyName: 'Josh Co', positionTitle: 'Worker', date: 'today' },
+  { status: 'contact', companyName: 'Josh 2', positionTitle: 'Worker', date: 'tomorrow' },
+  { status: 'applied', companyName: 'Daniel Inc', positionTitle: 'Consigliere', date: 'last year' },
 ]
 
 export default function handler(
