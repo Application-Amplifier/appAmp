@@ -1,9 +1,4 @@
-import ProvidersWrapper from './ProvidersWrapper'
-
-
-//basically just copy the old layout but change it slightly
-//adding the import of the big providers wrapper and wrapping with that
-//this allows us to use auth on all components as said in providers wrapper
+import './globals.css'
 
 export default function RootLayout({
   children,
@@ -17,11 +12,7 @@ export default function RootLayout({
         head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
       */}
       <head />
-      <body>
-        <ProvidersWrapper>
-          {children}
-        </ProvidersWrapper>
-      </body>
+      <body>{children}</body>
     </html>
   )
 }
