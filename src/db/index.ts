@@ -12,11 +12,7 @@ export default async function query(
   text: string,
   params?: unknown[]
 ): Promise<any> {
-  try {
-    const response = await db.query(text, params);
-    console.log('executing query: ', { text, rows: response.rowCount });
-    return response;
-  } catch (err) {
-    console.log(err);
-  }
+  const response = await db.query(text, params);
+  console.log('executing query: ', { text, rows: response.rowCount });
+  return response;
 }

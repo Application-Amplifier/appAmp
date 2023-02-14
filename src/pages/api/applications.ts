@@ -6,7 +6,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { userId } = req.query;
+  const { userId, appId } = req.query;
+  const appUpdates: Application = req.body;
   const {
     companyName,
     positionTitle,
@@ -23,43 +24,77 @@ export default async function handler(
     referral,
     notes,
   }: Application = req.body;
+  try {
+    switch (req.method) {
+      // GET ENDPOINT
+      case 'GET':
+        // Get all applications for the user with matching userId
+        const { rows } = await query(
+          'SELECT * FROM applications WHERE userID = $1;',
+          [userId]
+        );
+        return res.status(200).json(rows);
 
-  switch (req.method) {
-    case 'GET':
-      const { rows } = await query(
-        'SELECT * FROM applications WHERE userID = $1',
-        [userId]
-      );
-      return res.status(200).json(rows);
-    case 'POST':
-      const result = await query(
-        `
-        INSERT INTO applications 
+      // POST ENDPOINT
+      case 'POST':
+        // Create a new application with the data from the request body
+        const resultPost = await query(
+          `
+        INSERT INTO applications
           (userId, companyName, positionTitle, positionLocation, jobPostingLink, resumeLink, applied, typeOfApplied, status, pointOfContact, followUpEmail, tailoredResume, coverLetter, referral, notes)
-          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15);
         `,
-        [
-          userId,
-          companyName,
-          positionTitle,
-          positionLocation,
-          jobPostingLink,
-          resumeLink,
-          applied,
-          typeOfApplied,
-          status,
-          pointOfContact,
-          followUpEmail,
-          tailoredResume,
-          coverLetter,
-          referral,
-          notes,
-        ]
-      );
-      return res.status(200).json(result);
-    case 'PUT':
-      return res.status(200).send('PUT');
-    case 'DELETE':
-      return res.status(201).send('DELETE');
+          [
+            userId,
+            companyName,
+            positionTitle,
+            positionLocation,
+            jobPostingLink,
+            resumeLink,
+            applied,
+            typeOfApplied,
+            status,
+            pointOfContact,
+            followUpEmail,
+            tailoredResume,
+            coverLetter,
+            referral,
+            notes,
+          ]
+        );
+        return res.status(200).json(resultPost);
+
+      // PUT ENDPOINT
+      case 'PUT':
+        // Convert the updates object into an array of entries
+        const updates = Object.entries(appUpdates);
+        // Generate a string of the updates to be used in the query
+        let string = '';
+        for (let i = 0; i < updates.length; i++) {
+          if (i === updates.length - 1)
+            string += `${updates[i][0]} = '${updates[i][1]}' `;
+          else string += `${updates[i][0]} = '${updates[i][1]}', `;
+        }
+        // Generate the query string
+        const queryString: string = `UPDATE applications SET ${string} WHERE _id = ${appId}`;
+        // Execute the update query
+        const resultPut: any = await query(queryString);
+        // Return the updated application
+        return res.status(200).json(resultPut);
+
+      // DELETE ENDPOINT
+      case 'DELETE':
+        // Delete application with matching appId
+        const resultDelete = await query(
+          'DELETE FROM applications WHERE _id = $1',
+          [appId]
+        );
+        return res.status(201).send('DELETE');
+    }
+  } catch (error: any) {
+    console.log(error.message);
+    return res
+      .status(500)
+      .json({ message: `Error with ${req.method} request: ${error.message}` });
   }
 }
