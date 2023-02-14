@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 // https://www.npmjs.com/package/react-modal
 import Modal from 'react-modal';
-import VscTools from 'react-icons/vsc';
 import Application from '../../interfaces/application'
 
 type Props = {
@@ -15,31 +14,29 @@ const Tile = (props: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({});
 
-  // update form object after each keystroke
-  //   const handleChange = (e: any) => {
-  //     setFormData({
-  //       ...formData,
-  //       [e.target.name]: e.target.value,
-  //     });
-  //     console.log(formData);
-  //   };
+  // Update form object after each keystroke
+  const handleChange = (e: any) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+    console.log(formData);
+  };
 
   // submit form: send post request to server @ /login
-  //   const handleSubmit = (e: any) => {
-  //     e.preventDefault();
-  //     console.log(formData);
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    console.log(formData);
 
-  //     fetch('/login', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(formData),
-  //     });
-  //   };
+    fetch('/api/applications', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    });
+  };
 
   return (
-    <div className='flex-grow hover:bg-gray-700 hover:scale-105 hover:shadow-md items-center'>
+    <div className='flex-grow hover:bg-indigo-50 hover:scale-105 hover:shadow-md items-center'>
       <div
         onClick={() => setIsOpen(true)}
         className='flex flex-col rounded-md border px-2 py-4 cursor-pointer'
@@ -52,7 +49,7 @@ const Tile = (props: Props) => {
         isOpen={isOpen}
         onRequestClose={() => setIsOpen(false)}
         shouldCloseOnOverlayClick={true}
-        className='w-3/5 h-3/5 m-auto mt-20 rounded-lg shadow-xl z-20 bg-white border-b-8 border-indigo-200'
+        className='w-1/2 m-auto rounded-lg shadow-xl px-10 z-20 mt-32 bg-white border-b-8 border-indigo-200'
       >
         <form className='p-12 z-20 relative'>
           <div className='flex pt-8 pb-8 gap-x-2'>
@@ -72,7 +69,7 @@ const Tile = (props: Props) => {
             </svg>
 
             <h1 className='text-2xl mt-[-3px] font-bold'>
-              Create your first build!
+              {application.companyName} | {application.positionTitle}
             </h1>
           </div>
           <button
@@ -83,24 +80,51 @@ const Tile = (props: Props) => {
           </button>
           <div className='mb-4'>
             <label className='block font-medium mb-2' htmlFor='email'>
-              Project Name:
+              Company Name:
             </label>
             <input
               className='border outline-none rounded focus:border-b focus:border-b-indigo-500 w-full py-2 px-3'
               type='email'
               autoComplete='false'
-              placeholder='name your project here...'
-              name='email' // the sent object key
-            // onChange={handleChange}
+              placeholder='Microsoft'
+              name='companyName' // the sent object key
+              onChange={handleChange}
+            />
+          </div>
+          <div className='mb-4'>
+            <label className='block font-medium mb-2' htmlFor='email'>
+              Position Title:
+            </label>
+            <input
+              className='border outline-none rounded focus:border-b focus:border-b-indigo-500 w-full py-2 px-3'
+              type='email'
+              autoComplete='false'
+              placeholder='Software Engineer'
+              name='positionTitle' // the sent object key
+              onChange={handleChange}
+            />
+          </div>
+          <div className='mb-4'>
+            <label className='block font-medium mb-2' htmlFor='email'>
+              Date:
+            </label>
+            <input
+              className='border outline-none rounded focus:border-b focus:border-b-indigo-500 w-full py-2 px-3'
+              type='email'
+              autoComplete='false'
+              placeholder='01/01/2022'
+              name='date' // the sent object key
+              onChange={handleChange}
             />
           </div>
 
           <button
-            className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded shadow-sm hover:scale-105 hover:shadow-lg '
+            className='bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-5 8 rounded shadow-sm hover:scale-105 hover:shadow-lg '
             type='submit'
             value='login'
+            onClick={handleSubmit}
           >
-            Go To Map
+            Update
           </button>
         </form>
       </Modal>

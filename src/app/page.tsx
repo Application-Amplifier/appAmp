@@ -1,5 +1,4 @@
 import Navbar from './Navbar';
-import Login from './(auth)/login';
 import styles from './page.module.css'
 
 function Home() {

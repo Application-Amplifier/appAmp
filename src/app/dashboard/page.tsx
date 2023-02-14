@@ -45,9 +45,8 @@ const Dashboard = (props: Props) => {
 
   return (
     <>
-      <button onClick={() => signOut()} type="button" className="btn btn-primary">Sign Out of Google</button>
       <Navbar />
-      <div className='flex w-full h-full'>
+      <div className='flex w-full h-full '>
         <div className={column}>
           <h1>Contacted</h1>
           {contactTiles.map((item: Application, idx: number) => (
