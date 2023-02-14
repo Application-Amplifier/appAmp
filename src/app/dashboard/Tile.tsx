@@ -79,45 +79,66 @@ const Tile = (props: Props) => {
             X
           </button>
           <div className='mb-4'>
-            <label className='block font-medium mb-2' htmlFor='email'>
+            <label className='block font-medium mb-2' htmlFor='companyName'>
               Company Name:
             </label>
             <input
+              id="companyNameInput"
               className='border outline-none rounded focus:border-b focus:border-b-indigo-500 w-full py-2 px-3'
-              type='email'
+              type='text'
               autoComplete='false'
               placeholder='Microsoft'
               name='companyName' // the sent object key
+              value={application.companyName}
               onChange={handleChange}
             />
           </div>
           <div className='mb-4'>
-            <label className='block font-medium mb-2' htmlFor='email'>
+            <label className='block font-medium mb-2' htmlFor='positionTitle'>
               Position Title:
             </label>
             <input
+              id="positionTitleInput"
               className='border outline-none rounded focus:border-b focus:border-b-indigo-500 w-full py-2 px-3'
-              type='email'
+              type='text'
               autoComplete='false'
               placeholder='Software Engineer'
               name='positionTitle' // the sent object key
+              value={application.positionTitle}
               onChange={handleChange}
             />
           </div>
           <div className='mb-4'>
-            <label className='block font-medium mb-2' htmlFor='email'>
+            <label className='block font-medium mb-2' htmlFor='date'>
               Date:
             </label>
             <input
+              id="dateInput"
               className='border outline-none rounded focus:border-b focus:border-b-indigo-500 w-full py-2 px-3'
-              type='email'
+              type='text'
               autoComplete='false'
               placeholder='01/01/2022'
               name='date' // the sent object key
+              value={application.date.toString()}
               onChange={handleChange}
             />
           </div>
-
+          <div className='mb-4'>
+            <label className='block font-medium mb-2' htmlFor='status'>
+              Status:
+            </label>
+            <select
+              id="statusInput"
+              className='border outline-none rounded focus:border-b focus:border-b-indigo-500 w-full py-2 px-3'
+              name='status' // the sent object key
+              onChange={handleChange}
+            >
+              <option selected={application.status === 'contact'} value='contacted'>Contacted</option>
+              <option selected={application.status === 'applied'} value='applied'>Applied</option>
+              <option selected={application.status === 'interviewed'} value='interviewed'>Interviewed</option>
+              <option selected={application.status === 'offered'} value='offered'>Offered</option>
+            </select>
+          </div>
           <button
             className='bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-5 8 rounded shadow-sm hover:scale-105 hover:shadow-lg '
             type='submit'
