@@ -37,7 +37,7 @@ function Home() {
             <div className='hidden sm:mb-8 sm:flex sm:justify-center'>
               <div className='relative rounded-full py-1 px-3 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20'>
                 App Amp is a modern Job Tracking Software.{' '}
-                <a href='#' className='font-semibold text-indigo-600'>
+                <a href='https://github.com/Application-Amplifier/appAmp' className='font-semibold text-indigo-600'>
                   <span className='absolute inset-0' aria-hidden='true' />
                   Open GitHub <span aria-hidden='true'>&rarr;</span>
                 </a>
@@ -53,7 +53,7 @@ function Home() {
               </p>
               <div className='mt-10 flex items-center justify-center gap-x-6'>
                 <a
-                  href='#'
+                  href='https://github.com/Application-Amplifier/appAmp#readme'
                   className='text-base font-semibold leading-7 text-gray-900'
                 >
                   Learn more <span aria-hidden='true'>→</span>
