@@ -46,7 +46,7 @@ const Tile = (props: Props) => {
   strengthAttributes.forEach((attribute) => {
     if (attribute) strengthSum++;
   })
-  const strengthScore = strengthSum === 4 ? 'bg-amber-300' : strengthSum === 3 ? 'bg-green-100' : strengthSum === 2 ? 'bg-white' : 'bg-red-400';
+  const strengthScore = strengthSum === 4 ? 'bg-amber-300' : strengthSum === 3 ? 'bg-green-100' : strengthSum === 2 ? 'bg-white' : strengthSum === 1 ? 'bg-blue-200' : 'bg-red-400';
 
   // Update form object after each keystroke
   const handleChange = (e: any) => {
@@ -77,8 +77,20 @@ const Tile = (props: Props) => {
     setApplicationsFetched(false);
   };
 
+  // submit form: send post request to server @ /login
+  const handleDelete = async (e: any) => {
+    e.preventDefault();
+    await fetch(`/api/applications?appId=${application._id}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    });
+    setIsOpen(false);
+    setApplicationsFetched(false);
+  };
+
   return (
-    <div>
+    <div className='shadow-lg'>
       <div
         onClick={() => setIsOpen(true)}
         className={`flex-grow hover:bg-indigo-50 hover:scale-105 hover:shadow-md flex flex-col rounded-md border px-4 py-4 cursor-pointer ${strengthScore}`}
@@ -93,9 +105,9 @@ const Tile = (props: Props) => {
         isOpen={isOpen}
         onRequestClose={() => setIsOpen(false)}
         shouldCloseOnOverlayClick={true}
-        className="w-1/2 m-auto rounded-lg shadow-xl px-10 z-20 mt-4 bg-white border-b-8 border-indigo-200"
+        className="w-1/2 m-auto rounded-lg shadow-xl px-10 z-20 mt-12 bg-white border-b-8 border-indigo-200"
       >
-        <form className="p-12 z-20 relative">
+        <form className="p-6 z-20 relative">
           <div className="flex pt-8 pb-8 gap-x-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -224,7 +236,7 @@ const Tile = (props: Props) => {
 
           {/* ------------Checkboxes------------ */}
 
-          <div className="flex justify-start gap-3 mb-4 ml-10">
+          <div className="flex justify-start gap-3 mb-2 ml-10">
             <input
               id="followUpEmailCheckbox"
               className="border outline-none rounded focus:border-b focus:border-b-indigo-500 py-2 px-3"
@@ -237,7 +249,7 @@ const Tile = (props: Props) => {
               Follow Up Email:
             </label>
           </div>
-          <div className="flex justify-start gap-3 mb-4 ml-10">
+          <div className="flex justify-start gap-3 mb-2 ml-10">
             <input
               id="tailoredResumeCheckbox"
               className="border outline-none rounded focus:border-b focus:border-b-indigo-500 py-2 px-3"
@@ -250,7 +262,7 @@ const Tile = (props: Props) => {
               Tailored Resume:
             </label>
           </div>
-          <div className="flex justify-start gap-3 mb-4 ml-10">
+          <div className="flex justify-start gap-3 mb-2 ml-10">
             <input
               id="coverLetterCheckbox"
               className="border outline-none rounded focus:border-b focus:border-b-indigo-500 py-2 px-3"
@@ -263,7 +275,7 @@ const Tile = (props: Props) => {
               Cover Letter
             </label>
           </div>
-          <div className="flex justify-start gap-3 mb-4 ml-10">
+          <div className="flex justify-start gap-3 mb-2 ml-10">
             <input
               id="referralCheckbox"
               className="border outline-none rounded focus:border-b focus:border-b-indigo-500 py-2 px-3"
@@ -276,15 +288,24 @@ const Tile = (props: Props) => {
               Referral Secured
             </label>
           </div>
-
-          <button
-            className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-5 8 rounded shadow-sm hover:scale-105 hover:shadow-lg mt-4 "
-            type="submit"
-            value="login"
-            onClick={handleSubmit}
-          >
-            Update
-          </button>
+          <div className="flex justify-between">
+            <button
+              className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-5 8 rounded shadow-sm hover:scale-105 hover:shadow-lg mt-4 "
+              type="submit"
+              value="login"
+              onClick={handleSubmit}
+            >
+              Update
+            </button>
+            <button
+              className="bg-red-600 hover:bg-indigo-600 text-white font-bold py-2 px-5 8 rounded shadow-sm hover:scale-105 hover:shadow-lg mt-4 "
+              type="submit"
+              value="login"
+              onClick={handleDelete}
+            >
+              Delete
+            </button>
+          </div>
         </form>
       </Modal>
     </div>

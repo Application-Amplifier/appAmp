@@ -1,7 +1,15 @@
+import { redirect } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 
-const NewApplication = () => {
+type Props = {
+  setApplicationsFetched: (arg: boolean) => void;
+};
+
+const NewApplication = (props: Props) => {
+
+  const { setApplicationsFetched } = props;
+
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
     companyName: '',
@@ -33,14 +41,16 @@ const NewApplication = () => {
   };
 
   // submit form: send post request to server @ /login
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     console.log(formData)
     e.preventDefault();
-    fetch(`/api/applications`, {
+    await fetch(`/api/applications`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData),
     });
+    setIsOpen(false);
+    setApplicationsFetched(false);
   };
 
   return (
