@@ -1,5 +1,5 @@
-import ProvidersWrapper from './ProvidersWrapper'
-
+import ProvidersWrapper from './(auth)/ProvidersWrapper'
+import './globals.css'
 
 //basically just copy the old layout but change it slightly
 //adding the import of the big providers wrapper and wrapping with that

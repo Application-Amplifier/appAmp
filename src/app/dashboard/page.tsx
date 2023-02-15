@@ -1,9 +1,10 @@
 'use client';
 import React, { useState, useEffect } from 'react'
+import { signOut, useSession } from 'next-auth/react';
 import Navbar from './Navbar';
 import Tile from './Tile';
 import axios, { AxiosResponse } from 'axios'
-import { Application } from '../../types/Types'
+import Application from '../../interfaces/application';
 
 type Props = {}
 
@@ -12,6 +13,10 @@ const Dashboard = (props: Props) => {
   const [appliedTiles, setAppliedTiles] = useState<Application[]>([]);
   const [interviewedTiles, setInterviewedTiles] = useState<Application[]>([]);
   const [offeredTiles, setOfferedTiles] = useState<Application[]>([]);
+
+  const { data: session } = useSession();
+  console.log('current session is ', session);
+  // useSession uses React Context
 
 
   useEffect(() => {
@@ -40,32 +45,32 @@ const Dashboard = (props: Props) => {
   }, []);
 
   // CSS variables
-  const column = 'flex flex-col flex-grow mx-auto gap-y-4 border p-3'
+  const column = 'flex flex-col flex-grow gap-4 border-r-2 p-5'
 
   return (
     <>
       <Navbar />
       <div className='flex w-full h-full'>
         <div className={column}>
-          <h1>Contacted</h1>
+          <h1 className='text-center'>Contacted</h1>
           {contactTiles.map((item: Application, idx: number) => (
             <Tile key={idx} application={item} />
           ))}
         </div>
         <div className={column}>
-          <h1>Applied</h1>
+          <h1 className='text-center'>Applied</h1>
           {appliedTiles.map((item: Application, idx: number) => (
             <Tile key={idx} application={item} />
           ))}
         </div>
         <div className={column}>
-          <h1>Interviewed</h1>
+          <h1 className='text-center'>Interviewed</h1>
           {interviewedTiles.map((item: Application, idx: number) => (
             <Tile key={idx} application={item} />
           ))}
         </div>
         <div className={column}>
-          <h1>Offered</h1>
+          <h1 className='text-center'>Offered</h1>
           {offeredTiles.map((item: Application, idx: number) => (
             <Tile key={idx} application={item} />
           ))}

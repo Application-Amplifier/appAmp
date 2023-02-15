@@ -1,8 +1,9 @@
 import { DefaultSession } from "next-auth";
+import axios from 'axios';
 
-// 
 
 export function UserCard( { user } : { user: DefaultSession["user"]}) {
+    axios.post('http://localhost:3000/api/user', user);
     
     return (
         <div className="card">

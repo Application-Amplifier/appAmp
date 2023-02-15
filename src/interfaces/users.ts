@@ -1,7 +1,6 @@
 export default interface Users {
   _id: number;
-  firstName: string;
-  lastName: string;
+  name: string;
   email: string;
-  picture: string;
+  image: string;
 }
