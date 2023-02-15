@@ -1,41 +1,18 @@
 import React, { useEffect, useState } from 'react';
-// https://www.npmjs.com/package/react-modal
 import Modal from 'react-modal';
-import Application from '../../interfaces/application';
-import SqlApplication from '@/interfaces/sqlApplication';
 
-type Props = {
-  application: SqlApplication,
-  setApplicationsFetched: (arg: boolean) => void,
-}
-
-const Tile = (props: Props) => {
-
-  const { application, setApplicationsFetched } = props;
-  console.log('application in tile ', application)
-  const {
-    companyname: companyName,
-    positiontitle: positionTitle,
-    jobpostinglink: jobPostingLink,
-    positionlocation: positionLocation,
-    status: status,
-    followupemail: followUpEmail,
-    tailoredresume: tailoredResume,
-    coverletter: coverLetter,
-    referral: referral
-  } = application;
-
+const NewApplication = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
-    companyName,
-    positionTitle,
-    jobPostingLink,
-    positionLocation,
-    status,
-    followUpEmail,
-    tailoredResume,
-    coverLetter,
-    referral
+    companyName: '',
+    positionTitle: '',
+    jobPostingLink: '',
+    positionLocation: '',
+    status: 'contacted',
+    followUpEmail: false,
+    tailoredResume: false,
+    coverLetter: false,
+    referral: false,
   });
 
   // Update form object after each keystroke
@@ -57,25 +34,24 @@ const Tile = (props: Props) => {
 
   // submit form: send post request to server @ /login
   const handleSubmit = (e: any) => {
+    console.log(formData)
     e.preventDefault();
-    fetch(`/api/applications?appId=${application._id}`, {
-      method: 'PUT',
+    fetch(`/api/applications`, {
+      method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData),
     });
-    setIsOpen(false);
-    setApplicationsFetched(false);
   };
 
   return (
-    <div>
-      <div
-        onClick={() => setIsOpen(true)}
-        className='flex-grow hover:bg-indigo-50 hover:scale-105 hover:shadow-md flex flex-col rounded-md border px-2 py-4 cursor-pointer'
-      >
-        <span className="companyName">{companyName}</span>
-        <span className="positionTitle">{positionTitle}</span>
-        <span className="dateApplied">{new Date(application.date).toDateString()}</span>
+    <>
+      <div className="hidden lg:flex lg:flex-1 items-center lg:justify-end">
+        <a
+          onClick={() => setIsOpen(!isOpen)}
+          className="rounded-md text-sm cursor-pointer ml-4 bg-green-600 px-3.5 py-1.5 hover:shadow-md font-semibold leading-7 text-white shadow-sm hover:scale-105 hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+          Add Application
+        </a>
       </div>
       <Modal
         isOpen={isOpen}
@@ -101,7 +77,7 @@ const Tile = (props: Props) => {
             </svg>
 
             <h1 className='text-2xl mt-[-3px] font-bold'>
-              {companyName} | {positionTitle}
+              Add New Application
             </h1>
           </div>
           <button
@@ -121,7 +97,6 @@ const Tile = (props: Props) => {
               autoComplete='false'
               placeholder='Microsoft'
               name='companyName' // the sent object key
-              defaultValue={companyName}
               onChange={handleChange}
             />
           </div>
@@ -136,7 +111,6 @@ const Tile = (props: Props) => {
               autoComplete='false'
               placeholder='Software Engineer'
               name='positionTitle' // the sent object key
-              defaultValue={positionTitle}
               onChange={handleChange}
             />
           </div>
@@ -151,7 +125,6 @@ const Tile = (props: Props) => {
               autoComplete='false'
               placeholder='www.linkedin.com/link'
               name='jobPostingLink' // the sent object key
-              defaultValue={jobPostingLink}
               onChange={handleChange}
             />
           </div>
@@ -166,7 +139,6 @@ const Tile = (props: Props) => {
               autoComplete='false'
               placeholder='Remote, Hybrid, NYC...'
               name='positionLocation' // the sent object key
-              defaultValue={positionLocation}
               onChange={handleChange}
             />
           </div>
@@ -180,10 +152,10 @@ const Tile = (props: Props) => {
               name='status' // the sent object key
               onChange={handleChange}
             >
-              <option selected={application.status === 'contacted'} value='contacted'>Contacted</option>
-              <option selected={application.status === 'applied'} value='applied'>Applied</option>
-              <option selected={application.status === 'interviewed'} value='interviewed'>Interviewed</option>
-              <option selected={application.status === 'offered'} value='offered'>Offered</option>
+              <option value='contacted'>Contacted</option>
+              <option value='applied'>Applied</option>
+              <option value='interviewed'>Interviewed</option>
+              <option value='offered'>Offered</option>
             </select>
           </div>
 
@@ -195,7 +167,6 @@ const Tile = (props: Props) => {
               className='border outline-none rounded focus:border-b focus:border-b-indigo-500 py-2 px-3'
               type='checkbox'
               name='followUpEmailCheckbox' // the sent object key
-              defaultChecked={followUpEmail}
               onChange={handleChange}
             />
             <label className='block font-medium' htmlFor='followUpEmail'>
@@ -208,7 +179,6 @@ const Tile = (props: Props) => {
               className='border outline-none rounded focus:border-b focus:border-b-indigo-500 py-2 px-3'
               type='checkbox'
               name='tailoredResumeCheckbox' // the sent object key
-              defaultChecked={tailoredResume}
               onChange={handleChange}
             />
             <label className='block font-medium' htmlFor='tailoredResume'>
@@ -221,7 +191,6 @@ const Tile = (props: Props) => {
               className='border outline-none rounded focus:border-b focus:border-b-indigo-500 py-2 px-3'
               type='checkbox'
               name='coverLetterCheckbox' // the sent object key
-              defaultChecked={coverLetter}
               onChange={handleChange}
             />
             <label className='block font-medium' htmlFor='coverLetter'>
@@ -234,7 +203,6 @@ const Tile = (props: Props) => {
               className='border outline-none rounded focus:border-b focus:border-b-indigo-500 py-2 px-3'
               type='checkbox'
               name='referralCheckbox' // the sent object key
-              defaultChecked={referral}
               onChange={handleChange}
             />
             <label className='font-medium' htmlFor='referral'>
@@ -252,8 +220,8 @@ const Tile = (props: Props) => {
           </button>
         </form>
       </Modal>
-    </div>
+    </>
   );
 };
 
-export default Tile;
+export default NewApplication;

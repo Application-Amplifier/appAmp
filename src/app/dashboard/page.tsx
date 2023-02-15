@@ -5,14 +5,16 @@ import Navbar from './Navbar';
 import Tile from './Tile';
 import axios, { AxiosResponse } from 'axios'
 import Application from '../../interfaces/application';
+import SqlApplication from '../../interfaces/sqlApplication';
 
 type Props = {}
 
 const Dashboard = (props: Props) => {
-  const [contactedTiles, setcontactedTiles] = useState<Application[]>([]);
-  const [appliedTiles, setAppliedTiles] = useState<Application[]>([]);
-  const [interviewedTiles, setInterviewedTiles] = useState<Application[]>([]);
-  const [offeredTiles, setOfferedTiles] = useState<Application[]>([]);
+  const [contactedTiles, setcontactedTiles] = useState<SqlApplication[]>([]);
+  const [appliedTiles, setAppliedTiles] = useState<SqlApplication[]>([]);
+  const [interviewedTiles, setInterviewedTiles] = useState<SqlApplication[]>([]);
+  const [offeredTiles, setOfferedTiles] = useState<SqlApplication[]>([]);
+  const [applicationsFetched, setApplicationsFetched] = useState(false);
 
   const { data: session } = useSession();
   console.log('current session is ', session);
@@ -20,29 +22,29 @@ const Dashboard = (props: Props) => {
 
 
   useEffect(() => {
-    axios.get('./api/hello')
-      .then((res: AxiosResponse) => {
+    if (!applicationsFetched) {
+      axios.get('./api/applications')
+        .then((res: AxiosResponse) => {
+          const contacted: SqlApplication[] = [];
+          const applied: SqlApplication[] = [];
+          const interviewed: SqlApplication[] = [];
+          const offered: SqlApplication[] = [];
 
-        console.log('res data ', res.data);
+          res.data.forEach((application: SqlApplication) => {
+            if (application.status === 'contacted') contacted.push(application)
+            if (application.status === 'applied') applied.push(application)
+            if (application.status === 'interviewed') interviewed.push(application)
+            if (application.status === 'offered') offered.push(application)
+          });
 
-        const contacted: Application[] = [];
-        const applied: Application[] = [];
-        const interviewed: Application[] = [];
-        const offered: Application[] = [];
-
-        res.data.forEach((application: Application) => {
-          if (application.status === 'contacted') contacted.push(application)
-          if (application.status === 'applied') applied.push(application)
-          if (application.status === 'interviewed') interviewed.push(application)
-          if (application.status === 'offered') offered.push(application)
-        });
-
-        setcontactedTiles(contacted);
-        setAppliedTiles(applied);
-        setInterviewedTiles(interviewed);
-        setOfferedTiles(offered);
-      })
-  }, []);
+          setcontactedTiles(contacted);
+          setAppliedTiles(applied);
+          setInterviewedTiles(interviewed);
+          setOfferedTiles(offered);
+          setApplicationsFetched(true);
+        })
+    }
+  }, [applicationsFetched]);
 
   // CSS variables
   const column = 'flex flex-col flex-grow gap-4 border-r-2 p-5'
@@ -53,26 +55,26 @@ const Dashboard = (props: Props) => {
       <div className='grid grid-cols-4 w-full h-full'>
         <div className={column}>
           <h1 className='text-center'>Contacted</h1>
-          {contactedTiles.map((item: Application, idx: number) => (
-            <Tile key={idx} application={item} />
+          {contactedTiles.map((item: SqlApplication, idx: number) => (
+            <Tile key={idx} application={item} setApplicationsFetched={setApplicationsFetched} />
           ))}
         </div>
         <div className={column}>
           <h1 className='text-center'>Applied</h1>
-          {appliedTiles.map((item: Application, idx: number) => (
-            <Tile key={idx} application={item} />
+          {appliedTiles.map((item: SqlApplication, idx: number) => (
+            <Tile key={idx} application={item} setApplicationsFetched={setApplicationsFetched} />
           ))}
         </div>
         <div className={column}>
           <h1 className='text-center'>Interviewed</h1>
-          {interviewedTiles.map((item: Application, idx: number) => (
-            <Tile key={idx} application={item} />
+          {interviewedTiles.map((item: SqlApplication, idx: number) => (
+            <Tile key={idx} application={item} setApplicationsFetched={setApplicationsFetched} />
           ))}
         </div>
         <div className={column}>
           <h1 className='text-center'>Offered</h1>
-          {offeredTiles.map((item: Application, idx: number) => (
-            <Tile key={idx} application={item} />
+          {offeredTiles.map((item: SqlApplication, idx: number) => (
+            <Tile key={idx} application={item} setApplicationsFetched={setApplicationsFetched} />
           ))}
         </div>
       </div>

@@ -14,6 +14,6 @@ export default interface Application {
   followUpEmail: boolean;
   tailoredResume: boolean;
   coverLetter: boolean;
-  referral: number;
+  referral: boolean;
   notes: string;
 }
