@@ -6,9 +6,14 @@ import { Dialog } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import NewApplication from './NewApplication'
 
-type Props = {};
+type Props = {
+  setApplicationsFetched: (arg: boolean) => void;
+};
 
 const Navbar = (props: Props) => {
+
+  const { setApplicationsFetched } = props;
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navigation = [
@@ -62,7 +67,7 @@ const Navbar = (props: Props) => {
           ))}
         </div> */}
         <div className="grid grid-cols-2 justify-end">
-          <NewApplication />
+          <NewApplication setApplicationsFetched={setApplicationsFetched} />
           <div className='hidden lg:flex lg:flex-1 items-center'>
             <a onClick={() => signOut({ callbackUrl: '/' })} className='rounded-md text-sm cursor-pointer ml-4 bg-indigo-600 px-3.5 py-1.5 hover:shadow-md font-semibold leading-7 text-white shadow-sm hover:scale-105 hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'>
               Logout
