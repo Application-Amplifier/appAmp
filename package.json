@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.10",
+    "@heroicons/react": "^2.0.15",
     "@next/font": "13.1.6",
     "@types/node": "18.13.0",
     "@types/react": "18.0.28",
@@ -17,6 +19,7 @@
     "cookies-next": "^2.1.1",
     "eslint": "8.34.0",
     "eslint-config-next": "13.1.6",
+    "heroicons": "^2.0.15",
     "next": "13.1.6",
     "next-auth": "^4.19.2",
     "pg": "^8.9.0",

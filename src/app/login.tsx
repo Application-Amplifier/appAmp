@@ -31,6 +31,3 @@ export default function Login() {
             </>
         )
     }
-
-    // if a user doesn't exist -> show a Sign In button
-}
