@@ -36,10 +36,10 @@ const Tile = (props: Props) => {
   };
 
   return (
-    <div className='flex-grow hover:bg-indigo-50 hover:scale-105 hover:shadow-md items-center'>
+    <div>
       <div
         onClick={() => setIsOpen(true)}
-        className='flex flex-col rounded-md border px-2 py-4 cursor-pointer'
+        className='flex-grow hover:bg-indigo-50 hover:scale-105 hover:shadow-md flex flex-col rounded-md border px-2 py-4 cursor-pointer'
       >
         <span className="companyName">{application.companyName}</span>
         <span className="positionTitle">{application.positionTitle}</span>
