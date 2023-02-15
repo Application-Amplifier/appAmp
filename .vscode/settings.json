@@ -1,4 +1,13 @@
 {
   "typescript.tsdk": "node_modules/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "driver": "PostgreSQL",
+      "name": "AppAmp",
+      "connectString": "postgres://unmzpmzv:Ou3gF8AMnPlP-aUMV1mLgtqlc3ukxs9D@raja.db.elephantsql.com/unmzpmzv"
+    }
+  ]
 }
