@@ -45,7 +45,7 @@ const NewApplication = () => {
 
   return (
     <>
-      <div className="hidden lg:flex lg:flex-1 items-center lg:justify-end">
+      <div className="hidden lg:flex lg:flex-1 items-center justify-center">
         <a
           onClick={() => setIsOpen(!isOpen)}
           className="rounded-md text-sm cursor-pointer ml-4 bg-green-600 px-3.5 py-1.5 hover:shadow-md font-semibold leading-7 text-white shadow-sm hover:scale-105 hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"

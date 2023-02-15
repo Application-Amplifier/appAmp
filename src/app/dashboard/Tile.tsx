@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import Application from '../../interfaces/application';
 import SqlApplication from '@/interfaces/sqlApplication';
+import { redirect } from 'next/navigation';
 
 type Props = {
   application: SqlApplication,
@@ -38,6 +39,14 @@ const Tile = (props: Props) => {
     referral
   });
 
+  // Set strength score
+  let strengthSum: number = 0;
+  const strengthAttributes = [followUpEmail, tailoredResume, coverLetter, referral]
+  strengthAttributes.forEach((attribute) => {
+    if (attribute) strengthSum++;
+  })
+  const strengthScore = strengthSum === 4 ? 'bg-amber-300' : strengthSum === 3 ? 'bg-green-100' : strengthSum === 2 ? 'bg-white' : 'bg-red-400';
+
   // Update form object after each keystroke
   const handleChange = (e: any) => {
 
@@ -56,9 +65,9 @@ const Tile = (props: Props) => {
   };
 
   // submit form: send post request to server @ /login
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    fetch(`/api/applications?appId=${application._id}`, {
+    await fetch(`/api/applications?appId=${application._id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData),
@@ -71,7 +80,7 @@ const Tile = (props: Props) => {
     <div>
       <div
         onClick={() => setIsOpen(true)}
-        className='flex-grow hover:bg-indigo-50 hover:scale-105 hover:shadow-md flex flex-col rounded-md border px-2 py-4 cursor-pointer'
+        className={`flex-grow hover:bg-indigo-50 hover:scale-105 hover:shadow-md flex flex-col rounded-md border px-2 py-4 cursor-pointer ${strengthScore}`}
       >
         <span className="companyName">{companyName}</span>
         <span className="positionTitle">{positionTitle}</span>

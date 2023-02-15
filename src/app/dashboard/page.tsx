@@ -49,30 +49,31 @@ const Dashboard = (props: Props) => {
   // CSS variables
   const column = 'flex flex-col flex-grow gap-4 border-r-2 p-5'
 
+
   return (
     <>
       <Navbar />
-      <div className='grid grid-cols-4 w-full h-full'>
+      <div className='grid grid-cols-4 w-full h-full px-24'>
         <div className={column}>
-          <h1 className='text-center'>Contacted</h1>
+          <h1 className='text-center'>{`Contacted - ${contactedTiles.length}`}</h1>
           {contactedTiles.map((item: SqlApplication, idx: number) => (
             <Tile key={idx} application={item} setApplicationsFetched={setApplicationsFetched} />
           ))}
         </div>
         <div className={column}>
-          <h1 className='text-center'>Applied</h1>
+          <h1 className='text-center'>{`Applied - ${appliedTiles.length}`}</h1>
           {appliedTiles.map((item: SqlApplication, idx: number) => (
             <Tile key={idx} application={item} setApplicationsFetched={setApplicationsFetched} />
           ))}
         </div>
         <div className={column}>
-          <h1 className='text-center'>Interviewed</h1>
+          <h1 className='text-center'>{`Interviewed - ${interviewedTiles.length}`}</h1>
           {interviewedTiles.map((item: SqlApplication, idx: number) => (
             <Tile key={idx} application={item} setApplicationsFetched={setApplicationsFetched} />
           ))}
         </div>
-        <div className={column}>
-          <h1 className='text-center'>Offered</h1>
+        <div className={`${column} border-r-0`}>
+          <h1 className='text-center'>{`Offered - ${offeredTiles.length}`}</h1>
           {offeredTiles.map((item: SqlApplication, idx: number) => (
             <Tile key={idx} application={item} setApplicationsFetched={setApplicationsFetched} />
           ))}
