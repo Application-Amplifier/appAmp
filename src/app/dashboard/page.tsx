@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react'
-import { signOut } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import Navbar from './Navbar';
 import Tile from './Tile';
 import axios, { AxiosResponse } from 'axios'
@@ -13,6 +13,10 @@ const Dashboard = (props: Props) => {
   const [appliedTiles, setAppliedTiles] = useState<Application[]>([]);
   const [interviewedTiles, setInterviewedTiles] = useState<Application[]>([]);
   const [offeredTiles, setOfferedTiles] = useState<Application[]>([]);
+
+  const { data: session } = useSession();
+  console.log('current session is ', session);
+  // useSession uses React Context
 
 
   useEffect(() => {
