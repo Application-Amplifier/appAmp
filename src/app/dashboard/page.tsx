@@ -9,7 +9,7 @@ import Application from '../../interfaces/application';
 type Props = {}
 
 const Dashboard = (props: Props) => {
-  const [contactTiles, setContactTiles] = useState<Application[]>([]);
+  const [contactedTiles, setcontactedTiles] = useState<Application[]>([]);
   const [appliedTiles, setAppliedTiles] = useState<Application[]>([]);
   const [interviewedTiles, setInterviewedTiles] = useState<Application[]>([]);
   const [offeredTiles, setOfferedTiles] = useState<Application[]>([]);
@@ -25,19 +25,19 @@ const Dashboard = (props: Props) => {
 
         console.log('res data ', res.data);
 
-        const contact: Application[] = [];
+        const contacted: Application[] = [];
         const applied: Application[] = [];
         const interviewed: Application[] = [];
         const offered: Application[] = [];
 
         res.data.forEach((application: Application) => {
-          if (application.status === 'contact') contact.push(application)
+          if (application.status === 'contacted') contacted.push(application)
           if (application.status === 'applied') applied.push(application)
           if (application.status === 'interviewed') interviewed.push(application)
           if (application.status === 'offered') offered.push(application)
         });
 
-        setContactTiles(contact);
+        setcontactedTiles(contacted);
         setAppliedTiles(applied);
         setInterviewedTiles(interviewed);
         setOfferedTiles(offered);
@@ -50,10 +50,10 @@ const Dashboard = (props: Props) => {
   return (
     <>
       <Navbar />
-      <div className='flex w-full h-full'>
+      <div className='grid grid-cols-4 w-full h-full'>
         <div className={column}>
           <h1 className='text-center'>Contacted</h1>
-          {contactTiles.map((item: Application, idx: number) => (
+          {contactedTiles.map((item: Application, idx: number) => (
             <Tile key={idx} application={item} />
           ))}
         </div>

@@ -43,13 +43,13 @@ const Tile = (props: Props) => {
       >
         <span className="companyName">{application.companyName}</span>
         <span className="positionTitle">{application.positionTitle}</span>
-        <span className="dateApplied">{application.date.toString()}</span>
+        <span className="dateApplied">{new Date(application.date).toDateString()}</span>
       </div>
       <Modal
         isOpen={isOpen}
         onRequestClose={() => setIsOpen(false)}
         shouldCloseOnOverlayClick={true}
-        className='w-1/2 m-auto rounded-lg shadow-xl px-10 z-20 mt-32 bg-white border-b-8 border-indigo-200'
+        className='w-1/2 m-auto rounded-lg shadow-xl px-10 z-20 my-16 bg-white border-b-8 border-indigo-200'
       >
         <form className='p-12 z-20 relative'>
           <div className='flex pt-8 pb-8 gap-x-2'>
@@ -133,14 +133,70 @@ const Tile = (props: Props) => {
               name='status' // the sent object key
               onChange={handleChange}
             >
-              <option selected={application.status === 'contact'} value='contacted'>Contacted</option>
+              <option selected={application.status === 'contacted'} value='contacted'>Contacted</option>
               <option selected={application.status === 'applied'} value='applied'>Applied</option>
               <option selected={application.status === 'interviewed'} value='interviewed'>Interviewed</option>
               <option selected={application.status === 'offered'} value='offered'>Offered</option>
             </select>
           </div>
+
+          {/* ------------Checkboxes------------ */}
+
+          <div className='flex justify-start gap-3 mb-4 ml-10'>
+            <input
+              id="followUpEmailInput"
+              className='border outline-none rounded focus:border-b focus:border-b-indigo-500 py-2 px-3'
+              type='checkbox'
+              value='followUpEmailInput' // the sent object key
+              defaultChecked={application.followUpEmail}
+              onChange={handleChange}
+            />
+            <label className='block font-medium' htmlFor='followUpEmail'>
+              Follow Up Email:
+            </label>
+          </div>
+          <div className='flex justify-start gap-3 mb-4 ml-10'>
+            <input
+              id="tailoredResumeInput"
+              className='border outline-none rounded focus:border-b focus:border-b-indigo-500 py-2 px-3'
+              type='checkbox'
+              name='tailoredResumeInput' // the sent object key
+              defaultChecked={application.tailoredResume}
+              onChange={handleChange}
+            />
+            <label className='block font-medium' htmlFor='tailoredResume'>
+              Tailored Resume:
+            </label>
+          </div>
+          <div className='flex justify-start gap-3 mb-4 ml-10'>
+            <input
+              id="coverLetterInput"
+              className='border outline-none rounded focus:border-b focus:border-b-indigo-500 py-2 px-3'
+              type='checkbox'
+              name='coverLetterInput' // the sent object key
+              defaultChecked={application.coverLetter}
+              onChange={handleChange}
+            />
+            <label className='block font-medium' htmlFor='coverLetter'>
+              Cover Letter
+            </label>
+          </div>
+          <div className='flex justify-start gap-3 mb-4 ml-10'>
+            <input
+              id="referralInput"
+              className='border outline-none rounded focus:border-b focus:border-b-indigo-500 py-2 px-3'
+              type='checkbox'
+              name='referralInput' // the sent object key
+              defaultChecked={application.referral > 0}
+              onChange={handleChange}
+            />
+            <label className='font-medium' htmlFor='referral'>
+              Referral Secured
+            </label>
+          </div>
+
           <button
-            className='bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-5 8 rounded shadow-sm hover:scale-105 hover:shadow-lg '
+            className='bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-5 8 rounded shadow-sm hover:scale-105 hover:shadow-lg mt-4 '
             type='submit'
             value='login'
             onClick={handleSubmit}

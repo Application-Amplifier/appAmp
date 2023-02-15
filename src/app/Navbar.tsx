@@ -11,8 +11,8 @@ const Navbar = (props: Props) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navigation = [
-    { name: 'Product', href: '#' },
-    { name: 'Documentation', href: '#' },
+    { name: 'Product', href: 'https://github.com/Application-Amplifier/appAmp' },
+    { name: 'Documentation', href: 'https://github.com/Application-Amplifier/appAmp#readme' },
   ];
 
   // get session from nextAuth
