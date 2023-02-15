@@ -5,7 +5,7 @@ import { UserCard } from "./userCard";
 export default function Login() {
     // get session from nextAuth
     const { data: session } = useSession();
-    console.log(session);
+    //console.log(session);
     // useSession uses React Context
 
     //This is part of the first page 

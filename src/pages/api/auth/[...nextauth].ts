@@ -1,8 +1,10 @@
+//@ts-nocheck
 import NextAuth from "next-auth/next";
+import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
 
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
   // Configure one or more authentication providers
   providers: [
     GoogleProvider({
@@ -14,4 +16,6 @@ export default NextAuth({
       clientSecret: process.env.GITHUB_SECRET,
     })
   ],
-})
+}
+
+export default NextAuth(authOptions);

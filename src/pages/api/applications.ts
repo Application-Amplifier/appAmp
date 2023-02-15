@@ -1,4 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from './auth/[...nextauth]';
 import query from '../../db';
 import Application from '@/interfaces/application';
 
@@ -6,6 +8,12 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  const session = await getServerSession(req, res, authOptions);
+
+  if (!session){
+    return res.status(401).json({message: "You must be logged in."});
+  }
+
   const { userId, appId } = req.query;
   const appUpdates: Application = req.body;
   const {
