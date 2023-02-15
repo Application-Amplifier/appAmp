@@ -13,10 +13,8 @@ export default async function handler(
 
 
   const session = await getServerSession(req, res, authOptions);
-
-  setCookie('hi', 'hey');
   
-  const { rows } = await query('SELECT * FROM users WHERE email = $1;', [session?.user?.email]);
+  const { rows } = await query('SELECT * FROM users WHERE email = $1', [session?.user?.email]);
     if (!rows.length){
       const name: string[] | undefined = session?.user?.name?.split(' ');
       let firstName;

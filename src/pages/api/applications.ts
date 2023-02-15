@@ -16,10 +16,12 @@ export default async function handler(
   }
 
   // Get the user ID from the database
-  const userId: string = await query(
+  const userInfo: any = await query(
     'SELECT _id FROM users WHERE email = $1;',
     [session?.user?.email]
   );
+
+  const userId = userInfo.rows[0]._id
 
   // If the user isn't found in the database, return an error
   if (!userId) return res.status(500).json({ message: 'User not found.' });
@@ -50,7 +52,7 @@ export default async function handler(
     if (req.method === 'GET') {
       // Get all applications for the user with matching userId
       const { rows } = await query(
-        'SELECT * FROM applications WHERE userID = $1;',
+        'SELECT * FROM applications WHERE userId = $1;',
         [userId]
       );
       return res.status(200).json(rows);
@@ -59,6 +61,8 @@ export default async function handler(
     // POST ENDPOINT
     else if (req.method === 'POST') {
       // Create a new application with the data from the request body
+      console.log('inside post endpoint');
+
       const result = await query(
         `
         INSERT INTO applications
